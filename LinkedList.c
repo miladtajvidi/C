@@ -3,6 +3,8 @@
 void addToFront(void);
 void addToBack(void);
 void printList(void);
+void deleteFront(void);
+void deleteBack(void);
 struct node
 {
     int data;
@@ -16,17 +18,19 @@ void main()
 {
     start =0;
     int choice, maxChoices;
-    maxChoices=4;
+    maxChoices=6;
     choice=0;
     while(choice< maxChoices)
         {
             printf("%s\n", "************** MAIN MENU ****************");
             printf("%s\n", "Please Enter one of the following Choices");
             printf("%s\n\n", "************** MAIN MENU ****************");
-            printf("%s\n\n","1:Add to the front of list");
+            printf("%s\n\n","1:Add to the front of the list");
             printf("%s\n\n","2:Add to the back of the list");
             printf("%s\n\n","3:Print the list");
-            printf("%s\n\n","4:Exit the program");
+            printf("%s\n\n","4:Delete from the front of the list");
+            printf("%s\n\n","5:Delete from the end of the list");
+            printf("%s\n\n","6:Exit the program");
             printf("%s", "Please give me your choice?");
             // Print Your choices here
             scanf("%d", &choice);
@@ -45,6 +49,14 @@ void main()
                     break;
 
                 case 4:
+                    deleteFront();
+                    break;
+
+                case 5:
+                    deleteBack();
+                    break;
+
+                case 6:
                     return 0;
 
             }
@@ -106,13 +118,67 @@ void printList(void)
     current=start;
     while(current!=0)
     {
-        printf("%d",current->data);
+        printf("%d\n\n",current->data);
         current=current->next;
     }
     printf("NULL");
 }
 
+void deleteFront(void)
+{
+    if (start==0)
+    {
+        printf("%s","List is empty; no node to delete");
 
+    }
 
+    struct node *current;
+    struct node *currentNext;
+    current =start;
+    currentNext=current->next;
+    if(currentNext==0)
+    {
+        start=0;
+    }
 
+    else
+    {
+        currentNext->prev=0;
+        start=currentNext;
+    }
+
+    free(current);
+    printf("Node deleted from the front successfully\n\n");
+    printList();
+
+}
+
+void deleteBack()
+{
+    if (start==0)
+    {
+        printf("%s","List is empty; no node to delete");
+
+    }
+
+    struct node * current;
+    struct node * currentNext;
+    current=start;
+    currentNext=current->next;
+    if (currentNext==0)
+    {
+        start=0;
+        free(current);
+
+    }
+
+    while (currentNext->next !=0)
+    {
+        current=current->next;
+        currentNext=current->next;
+    }
+    current->next=0;
+    free(currentNext);
+    printf("Node deleted from the back successfully\n\n");
+}
 
